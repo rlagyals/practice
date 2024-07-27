@@ -25,20 +25,26 @@ export default function Hobby({ mode, setMode }) {
     );
   });
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const topic = event.target.hobby.value;
+    if (topic.length === 0 ) {
+      alert("입력하라고 ㅋ");
+      return;
+    }
+    const newTopic = { id: nextID, topic: topic };
+    const newTopics = [...hobby, newTopic];
+    setHobby(newTopics);
+    setID(nextID);
+    setNextID(nextID + 1);
+    event.target.hobby.value = "";
+  };
+
   return (
     <div>
       <ul className="App-list">{hobbyList}</ul>
       <form
-        onSubmit={(event) => {
-          event.preventDefault();
-          const topic = event.target.hobby.value;
-          const newTopic = { id: nextID, topic: topic };
-          const newTopics = [...hobby, newTopic];
-          setHobby(newTopics);
-          setID(nextID);
-          setNextID(nextID + 1);
-          event.target.hobby.value = "";
-        }}
+        onSubmit={handleSubmit}
       >
         <input type="text" name="hobby" placeholder="취미를 입력하세용"></input>
         <button type="submit">추가</button>
